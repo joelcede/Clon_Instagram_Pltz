@@ -1,37 +1,40 @@
 #from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse
+#from django.http import HttpResponse
+from django.shortcuts import render
 from datetime import datetime
 
 posts = [
 	{
-		"name": "Joel Cedeño",
-		"user": "Jioska",
+		"title": " Montaña nevada",
+		"user": {
+			"name": "El jioska",
+			"picture": "https://i.picsum.photos/id/1036/200/200.jpg?hmac=Yb5E0WTltIYlUDPDqT-d0Llaaq0mJnwiCUtxx8RrtVE",
+		},
 		"timestamp": datetime.now().strftime("%b %dth %Y - %H:%M hrs"),
-		"picture": "https://i.picsum.photos/id/1036/200/200.jpg?hmac=Yb5E0WTltIYlUDPDqT-d0Llaaq0mJnwiCUtxx8RrtVE",
+		"photo": "https://www.trecebits.com/wp-content/uploads/2019/02/Persona-1-445x445.jpg",
 	},
 	{
-		"name": "Aksoij",
-		"user": "Idontknow",
+		"title": "Nevada",
+		"user": {
+			"name": "I dont know",
+			"picture": "https://i.picsum.photos/id/989/200/200.jpg?hmac=YmaagsSArKDGDSeyRJ9aYRxKM6KdP49ZGYtyhLHlCcY",
+		},
 		"timestamp": datetime.now().strftime("%b %dth %Y - %H:%M hrs"),
-		"picture": "https://i.picsum.photos/id/989/200/200.jpg?hmac=YmaagsSArKDGDSeyRJ9aYRxKM6KdP49ZGYtyhLHlCcY",
+		"photo": "https://cdnb.20m.es/sites/112/2019/04/cara6-620x618.jpg",
 	},
 	{
-		"name": "Karla",
-		"user": "Karla007",
+		"title": "Perro bonito",
+		"user": {
+			"name": "Karla007",
+			"picture": "https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
+		},
 		"timestamp": datetime.now().strftime("%b %dth %Y - %H:%M hrs"),
-		"picture": "https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
+		"photo": "https://pbs.twimg.com/media/DzVBSvnVYAA_txX?format=jpg&name=small",
 	}
 ]
 
 def list_pos(request):
 	"""lista de posts existentes"""
-	content = []
-	for post in posts:
-		content.append("""
-			<p><strong>{name}</strong></p>
-			<p><small>{user} - <i>{timestamp}</i></small></p>
-			<figure><img src="{picture}"/></figure>
-		""".format(**post))
-	return HttpResponse("<br>".join(content))
+	return render(request, "feed.html", {"posts": posts})
