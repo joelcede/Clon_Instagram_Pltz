@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 #from django.shortcuts import render
@@ -37,6 +38,7 @@ posts = [
 	}
 ]
 
+@login_required
 def list_pos(request):
 	"""lista de posts existentes"""
 	return render(request, "posts/feed.html", {"posts": posts})
