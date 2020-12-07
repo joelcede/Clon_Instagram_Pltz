@@ -4,13 +4,15 @@ from django.shortcuts import render, redirect
 #from django.http import HttpResponse
 #from datetime import datetime
 from posts.models import Poss
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
 
-
-@login_required
-def list_pos(request):
-	"""lista de posts existentes"""
-	posts = Poss.objects.all().order_by('-created')
-	return render(request, 'posts/feed.html', {'posts': posts})
+class PostsFeedView(LoginRequiredMixin, ListView):
+    template_name = 'posts/feed.html'
+    model = Poss
+    ordering = ('-created',)
+    paginate_by = 2
+    context_object_name = 'posts'
 
 @login_required
 def create_post(request):
@@ -18,7 +20,7 @@ def create_post(request):
 		form = PostForms(request.POST, request.FILES)
 		if form.is_valid():
 			form.save()
-			return redirect('feed')
+			return redirect('posts:feed')
 	else:
 		form = PostForms()
 		

@@ -4,7 +4,7 @@ from posts import views
 urlpatterns = [
 	path(
 		route = '',
-		view = views.list_pos,
+		view = views.PostsFeedView.as_view(),
 		name = 'feed'
 		),
 	path(
