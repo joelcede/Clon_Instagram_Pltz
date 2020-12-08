@@ -37,7 +37,6 @@ class SignupForm(forms.Form):
 
 
 class ProfileForm(forms.Form):
-    """Profile form."""
 
     website = forms.URLField(max_length=200, required=True)
     biography = forms.CharField(max_length=500, required=False)
