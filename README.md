@@ -1,4 +1,4 @@
-#Clon Instagram
+##Clon Instagram
 
 	> Se utilizo el lenguaje de python.
 	> Se creo un entorno virtual de pyenv para python.
