@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+#from django.shortcuts import render, redirect
+#from django.contrib.auth import authenticate, login, logout
+#from django.contrib.auth.decorators import login_required
 #from django.contrib.auth.models import User
 #from users.models import Profile
 #from django.db.utils import IntegrityError
@@ -12,6 +12,7 @@ from posts.models import Poss
 from django.contrib.auth.mixins import LoginRequiredMixin
 from users.models import Profile
 from users.forms import SignupForm
+from django.contrib.auth import views as auth_views
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     template_name = 'users/detail.html'
@@ -26,23 +27,12 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context['posts'] = Poss.objects.filter(user=user).order_by('-created')
         return context
 
-def login_view(request):
-	if request.method == "POST":
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(request, username=username,password=password)
-		if user:
-			login(request,user)
-			return redirect('posts:feed')
-		else:
-			return render(request, 'users/login.html', {'error': 'invalid username and password'})
+class LoginView(auth_views.LoginView):
+    template_name = 'users/login.html'
 
-	return render(request, 'users/login.html')
 
-@login_required
-def logout_view(request):
-	logout(request)
-	return redirect('users:login')
+class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
+    template_name = 'users/logged_out.html'
 
 
 class SignupView(FormView):
